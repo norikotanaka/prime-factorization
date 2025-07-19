@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>素因数分解</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+        input, button { padding: 10px; margin: 5px; font-size: 16px; }
+        #result { margin-top: 20px; padding: 15px; background: #f0f0f0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>素因数分解</h1>
+    <input type="number" id="number" placeholder="数字を入力" min="2">
+    <button onclick="factorize()">素因数分解</button>
+    <div id="result"></div>
+
+    <script>
+        function primeFactorization(n) {
+            const factors = [];
+            let d = 2;
+            while (d * d <= n) {
+                while (n % d === 0) {
+                    factors.push(d);
+                    n = Math.floor(n / d);
+                }
+                d++;
+            }
+            if (n > 1) factors.push(n);
+            return factors;
+        }
+
+        function factorize() {
+            const input = document.getElementById('number');
+            const result = document.getElementById('result');
+            const num = parseInt(input.value);
+            
+            if (!num || num < 2) {
+                result.innerHTML = '2以上の数字を入力してください';
+                return;
+            }
+            
+            const factors = primeFactorization(num);
+            result.innerHTML = `${num}の素因数分解: ${factors.join(' × ')}`;
+        }
+
+        document.getElementById('number').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') factorize();
+        });
+    </script>
+</body>
+</html>
